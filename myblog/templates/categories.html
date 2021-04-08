@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<style>
+    p{
+        font-size: 1.2rem;
+    }
+</style>
+
+<h1>
+     Post in the {{cats}} Category..
+</h1>
+
+{% if category_post %}
+    <ul>
+        {% for post in category_post %}
+        <li>
+            <a href="{% url 'article_detail' post.pk %}">{{ post.title }}</a>
+            - {{ post.author.first_name }} {{ post.author.last_name }} : 
+            {{post.published_date}} 
+                <small>
+                    {% if user.is_authenticated %} 
+                        - <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+        
+                        - <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+
+                    {% endif %}
+                </small>
+                <br>
+            {{ post.body|slice:":200"|safe }}
+        </li>
+
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>
+        No Post Made in This Category
+    </p>
+{% endif %}
+
+
+{% endblock %}
+

@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+
+
+{% block content %}
+
+	<h1>{{ post.title }}</h1>
+	<small class="text-muted">By: 
+		{{ post.author.first_name }} 
+		{{ post.author.last_name }} - 
+		{{ post.published_date }}  
+		
+		{% if user.is_authenticated %}
+			{% if user.id == post.author.id %}
+				- <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+
+				<a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+			{% endif %}
+		{% endif %}
+	</small><br/>
+	<hr>
+	<br/>
+	
+	{% if post.header_image %}
+		<img src="{{ post.header_image.url }}" class="card-img-top">
+	{% else %}
+		<img src="{% static 'blog/images/default-blog-post-image.png' %}" class="card-img-top">
+	{% endif %}
+
+	<br/><br/>
+	<p class="card-text">
+		{{ post.body|safe }}
+	</p>
+
+	<hr>
+	
+	<form action="{% url 'like_post' post.pk %}" method="POST">
+		{% csrf_token %}
+	<!-- Like Section -->
+	{% if user.is_authenticated %}
+		{% if liked %}
+			<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger btn-sm">Unlike</button> 
+		{% else %}	
+			<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary btn-sm">Like</button> 
+
+		{% endif %}
+	{% else %}
+		<small><a href="{% url 'login' %}">Login</a> to like</small>
+	{% endif %}
+	
+		- {{ total_likes }} Likes
+	
+	</form>
+	<br><br>
+
+	<div class="form-group">
+		<form method="POST" >
+			{% csrf_token %}
+			{{ form.as_p }}
+			<!-- <button class="btn btn-secondary">
+				Comment
+			</button> -->
+			<!-- User Profile Section -->
+			<div class="card mb-3" style="max-width: 540px;">
+				<div class="row no-gutters">
+				{% if post.author.profile.profile_pic %}
+				  <div class="col-md-4">
+					<img src="{{ post.author.profile.profile_pic.url }}" class="card-img" alt="..." width="200" height="200">
+				  </div>
+				{% else %}  
+				  <div class="col-md-4">
+					<img src="{% static 'blog/images/default-profile-pic.png' %}" class="card-img" alt="..." width="200" height="200">
+					<!-- <i class="fad fa-user-circle card-img"></i> -->
+				  </div>
+				{% endif %}
+				  <div class="col-md-8">
+					<div class="card-body">
+					  <h5 class="card-title">
+						{{ post.author.first_name }} 
+						{{ post.author.last_name }}
+					  </h5>
+					  <p class="card-text text-muted">
+						<a href="{% url 'show_profile_page' post.author.profile.id %}">
+							<i class="far fa-user"></i>
+						</a>
+							
+							{% if post.author.profile.fb_url %}	
+								  | <a href="{{ post.author.profile.fb_url }}" target="__blank__">
+										<i class="fab fa-facebook"></i>
+									</a> 
+							{% endif %}
+		
+							{% if post.author.profile.portfolio_url %}	
+								| <a href="{{ post.author.profile.portfolio_url }}" target="__blank__">
+									<i class="fas fa-portrait"></i> 
+								</a> 
+							{% endif %}
+		
+							{% if post.author.profile.twitter_url %}	
+								| <a href="{{ post.author.profile.twitter_url }}" target="__blank__">
+									<i class="fab fa-twitter"></i> 
+								</a> 
+							{% endif %}
+							{% if post.author.profile.insta_url %}	
+								| <a href="{{ post.author.profile.insta_url }}" target="__blank__">
+										<i class="fab fa-instagram"></i> 
+								</a> 
+							{% endif %}
+							{% if post.author.profile.pinterest_url %}	
+								| <a href="{{ post.author.profile.pinterest_url }}" target="__blank__">
+									<i class="fab fa-pinterest"></i> 
+								</a> 
+							{% endif %}
+							{% if post.author.profile.linkedin_url %}	
+								| <a href="{{ post.author.profile.linkedin_url }}" target="__blank__">
+										<i class="fab fa-linkedin"></i> 
+								</a> 
+							{% endif %}
+					  </p>
+					  <p class="card-text">
+							{{ post.author.profile.bio }}	  
+					  </p>
+					</div>
+				  </div>
+				</div>
+			  </div>
+
+			  <br>
+			  
+			{% if user.is_authenticated %}
+				<a href="{% url 'add_comment' post.pk %}" class="btn btn-secondary"> Comments </a>
+			{% else %}
+				<a href="#" class="btn btn-secondary disabled"> Comments </a>
+			{% endif %}
+			
+	</div>
+
+	<h2 style="text-decoration: underline;">
+		Comments
+	</h2>
+	
+	{% if not post.comments.all %}
+		<p>
+			No Comments Yet... <!-- Click here to Add One</a> -->
+		</p>
+	{% else %}
+		{% for comment in post.comments.all %}
+			<hr>
+			<strong>
+				{{ comment.name }} - {{ comment.date_added }}
+			</strong>
+			<br>
+			{{ comment.body }} <br> <br>
+			
+		{% endfor %}
+	{% endif %}
+	<hr>
+	
+
+
+<br/>
+
+<br/>
+{% endblock %}

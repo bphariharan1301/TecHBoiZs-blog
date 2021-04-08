@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title  %}
+    Post A Blog Comment
+{% endblock %}
+
+{% block content %}
+
+<style>
+    form .btn:hover{
+        background-color: #00b3db;
+        color: #fff;
+    }
+    h1{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 2rem;
+        text-decoration: none;
+        text-align: center;
+    }
+</style>
+
+<h1>Add Comment</h1>
+<br><br>
+
+<div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- {{ form.media }} -->
+        <!-- {{ form.snippet }} -->
+        {{ form.as_p }}
+    
+        <button class="btn btn-secondary">Add</button>
+        
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title  %}
+    User Profile
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .btn i{
+        text-decoration: none;
+    }
+</style>
+    
+
+<h1>User Profile</h1>
+<br/>
+
+
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-2">
+{% if page_user.profile_pic %}
+      <img src="{{ page_user.profile_pic.url }}" class="card-img">
+
+{% else %}
+	<img src="{% static 'blog/images/default-profile-pic.png' %}" class="card-img">
+{% endif %}
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <h5 class="card-title">
+        	{{ page_user.user.first_name }} 
+			{{ page_user.user.last_name }}
+		</h5>
+
+<p class="small text-muted">
+	
+	
+
+	{% if page_user.fb_url %}
+         <a href="{{ page_user.fb_url }}">  
+             <i class="fab fa-facebook"></i>
+        </a>  
+	{% endif %}
+
+	
+	{% if page_user.portfolio_url %}
+		 | <a href="{{ page_user.portfolio_url }}">
+            <i class="fas fa-portrait"></i> 
+         </a>  
+	{% endif %}
+
+
+	{% if page_user.twitter_url %}
+		| <a href="{{ page_user.twitter_url }}">
+            <i class="fab fa-twitter"></i>
+        </a> 
+	{% endif %}
+
+
+	{% if page_user.insta_url %}
+		| <a href="{{ page_user.insta_url }}">
+            <i class="fab fa-instagram"></i>
+        </a>
+	{% endif %}
+
+
+	{% if page_user.pinterest_url %}
+		| <a href="{{ page_user.pinterest_url }}">
+            <i class="fab fa-pinterest"></i>
+        </a>
+    {% endif %}
+    {% if page_user.linkedin_url %}	
+	    | <a href="{{ page_user.linkedin_url }}">
+			<i class="fab fa-linkedin"></i> 
+		  </a> 
+	{% endif %}
+
+
+</p>
+
+
+<p class="card-text">
+        	{{ page_user.bio }}
+        </p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<br/><br/>
+
+
+
+
+{% endblock %}
+
