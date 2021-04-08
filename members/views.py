@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 class CreateProfilePageView(generic.CreateView):
     model = Profile
     form_class = ProfilePageForm
-    template_name = 'registration/create_profie_page.html'
+    template_name = 'registration/create_profile_page.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
