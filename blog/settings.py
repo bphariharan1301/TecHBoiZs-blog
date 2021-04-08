@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = config('DEBUG', cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['techboizsblog.herokuapp.com', '127.0.0.1']
 
@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'techboizs_blog',
         'USER': 'techboizs',
         'PASSWORD': 'AAd!tyAA$ravi',
-        'HOST': 'techboizsblog.herokuapp.com',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
