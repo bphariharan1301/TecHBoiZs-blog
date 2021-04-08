@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'techboizs_blog',
         'USER': 'techboizs',
         'PASSWORD': 'AAd!tyAA$ravi',
-        'HOST': 'localhost',
+        'HOST': 'techboizsblog.herokuapp.com',
         'PORT': '5432',
     }
 }
