@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 # DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['techboizsblog.herokuapp.com', '127.0.0.1', 'techboizs-blog.herokuapp.com']
+ALLOWED_HOSTS = ['techboizsblog.herokuapp.com', '127.0.0.1', 'techboizs-blog.herokuapp.com',]
 
 # ALLOWED_HOSTS = []
 
